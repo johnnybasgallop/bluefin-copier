@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -24,7 +23,7 @@ func main() {
 	ctx := context.Background()
 	rdb := redis.NewClient(&redis.Options{Addr: "localhost:6379"})
 
-	pubsub := rdb.Subscribe(ctx, "master:2001:events")
+	pubsub := rdb.Subscribe(ctx, "copier:commands")
 	defer pubsub.Close()
 
 	if _, err := pubsub.Receive(ctx); err != nil {
@@ -42,13 +41,10 @@ func main() {
 		}
 
 		// compute latency
-		now := time.Now().UnixNano()
-		latencyNs := now - evt.SentAt
 		fmt.Printf(
-			"Received %s %s (pub→sub latency = %.3f ms)\n",
+			"Received %s %s\n",
 			evt.Type,
 			evt.Symbol,
-			float64(latencyNs)/1e6, // convert nanoseconds to milliseconds
 		)
 	}
 }

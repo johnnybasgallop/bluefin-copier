@@ -1,0 +1,32 @@
+# configs/config.yaml
+
+# The broker ID of your master account
+masterID: "2001"
+
+# One entry per subscriber, with its own lot-scaling ratio and optional symbol mappings
+subscribers:
+  - id: "1001"
+    lotRatio: 0.50
+    symbolMap:
+      EURUSD: EURUSD.i
+      # add other symbol overrides here…
+  - id: "1002"
+    lotRatio: 1.00
+    symbolMap:
+      EURUSD: EURUSD.h1
+
+  - id: "1003"
+    lotRatio: 0.50
+    symbolMap:
+    EURUSD:
+      EURUSD.i
+      # add other symbol overrides here…
+  - id: "1004"
+    lotRatio: 1.00
+    symbolMap:
+      EURUSD: EURUSD.h1
+
+# Optional risk filters you can apply in the future
+riskFilters:
+  maxDrawdownPct: 25
+  pauseOnNews: true
